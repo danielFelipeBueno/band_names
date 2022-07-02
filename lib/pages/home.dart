@@ -42,17 +42,34 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  ListTile _bandTile(Band band) {
-    return ListTile(
-      leading: CircleAvatar(
-        child: Text( band.name.substring(0,2) ),
-        backgroundColor: Colors.blue[100],
-      ),
-      title: Text(band.name),
-      trailing: Text('${band.votes}', style: const TextStyle(fontSize: 20 )),
-      onTap: (){
-        print(band.name);
+  Widget _bandTile(Band band) {
+    return Dismissible(
+      key: Key(band.id),
+      direction:  DismissDirection.startToEnd,
+      onDismissed: (direction){
+        print('direction: $direction');
+        print('id: ${band.id}');
+        //todo: Llmar el borrado en el server
       },
+      background: Container(
+        padding: EdgeInsets.only(left: 8), 
+        color: Colors.red,
+        child: const Align(
+          alignment: Alignment.centerLeft,
+          child: Text('Delete', style: TextStyle(color: Colors.white ) )
+        ),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text( band.name.substring(0,2) ),
+          backgroundColor: Colors.blue[100],
+        ),
+        title: Text(band.name),
+        trailing: Text('${band.votes}', style: const TextStyle(fontSize: 20 )),
+        onTap: (){
+          print(band.name);
+        },
+      ),
     );
   }
 
@@ -106,11 +123,12 @@ class _HomePageState extends State<HomePage> {
     }
     
   }
-
   void addBandToList(String name){
     if ( name.length > 1 ){
-
+      bands.add( new Band(id: DateTime.now().toString(), name: name, votes: 0));
+      setState(() {});
     }
+    
     Navigator.pop(context);
   }
 }
