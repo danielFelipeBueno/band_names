@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: (){},
+          onPressed: addNewBand,
         ),
       )
     );
@@ -50,6 +50,26 @@ class _HomePageState extends State<HomePage> {
       onTap: (){
         print(band.name);
       },
+    );
+  }
+
+  addNewBand(){
+    showDialog(
+      context: context, 
+      builder: ( context ){
+        return AlertDialog(
+          title: Text('New band name:'),
+          content: TextField(),
+          actions: [
+            MaterialButton(
+              child: Text('Add'),
+              elevation: 5,
+              textColor: Colors.blue, 
+              onPressed: () { },
+            )
+          ]
+        );
+      }
     );
   }
 }
